@@ -35,6 +35,7 @@ import com.google.api.server.spi.testing.AbsolutePathEndpoint;
 import com.google.api.server.spi.testing.ArrayEndpoint;
 import com.google.api.server.spi.testing.EnumEndpoint;
 import com.google.api.server.spi.testing.FooEndpoint;
+import com.google.api.server.spi.testing.LimitMetricsEndpoint;
 import com.google.common.collect.ImmutableList;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -151,6 +152,13 @@ public class SwaggerGeneratorTest {
   public void testWriteSwagger_AbsoluteCommonPathEndpoint() throws Exception {
     Swagger swagger = getSwagger(AbsoluteCommonPathEndpoint.class, new SwaggerContext(), true);
     Swagger expected = readExpectedAsSwagger("absolute_common_path_endpoint.swagger");
+    compareSwagger(expected, swagger);
+  }
+
+  @Test
+  public void testWriteSwagger_LimitMetricsEndpoint() throws Exception {
+    Swagger swagger = getSwagger(LimitMetricsEndpoint.class, new SwaggerContext(), true);
+    Swagger expected = readExpectedAsSwagger("limit_metrics_endpoint.swagger");
     compareSwagger(expected, swagger);
   }
 

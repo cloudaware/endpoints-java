@@ -1,0 +1,83 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "myapi.appspot.com"
+  },
+  "host": "myapi.appspot.com",
+  "basePath": "/_ah/api",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/limits/v1/create": {
+      "post": {
+        "operationId": "LimitsCreateFoo",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "A successful response",
+            "schema": {
+              "$ref": "#/definitions/Foo"
+            }
+          }
+        },
+        "x-google-quota": {
+          "metricCosts": {
+            "write": 5
+          }
+        }
+      }
+    },
+    "/limits/v1/customFoo": {
+      "post": {
+        "operationId": "LimitsCustomFoo",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "A successful response"
+          }
+        },
+        "x-google-quota": {
+          "metricCosts": {
+            "read": 1,
+            "write": 2
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Foo": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    }
+  },
+  "x-google-quota-definitions": {
+    "limits": [
+      {
+        "metric": "read",
+        "display_name": "Read requests",
+        "default_limit": 100
+      },
+      {
+        "metric": "write",
+        "display_name": "Write requests",
+        "default_limit": 10
+      }
+    ]
+  }
+}
