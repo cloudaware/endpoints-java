@@ -90,6 +90,7 @@ import io.swagger.models.properties.LongProperty;
 import io.swagger.models.properties.Property;
 import io.swagger.models.properties.RefProperty;
 import io.swagger.models.properties.StringProperty;
+import io.swagger.models.refs.RefType;
 
 /**
  * Generates a {@link Swagger} object representing a set of {@link ApiConfig} objects.
@@ -322,7 +323,7 @@ public class SwaggerGenerator {
           Schema schema = genCtx.schemata.getOrAdd(requestType, apiConfig);
           BodyParameter bodyParameter = new BodyParameter();
           bodyParameter.setName("body");
-          bodyParameter.setSchema(new RefModel(schema.name()));
+          bodyParameter.setSchema(new RefModel(RefType.DEFINITION.getInternalPrefix() + schema.name()));
           operation.addParameter(bodyParameter);
           break;
         case UNKNOWN:
@@ -336,7 +337,7 @@ public class SwaggerGenerator {
       TypeToken<?> returnType =
           ApiAnnotationIntrospector.getSchemaType(methodConfig.getReturnType(), apiConfig);
       Schema schema = genCtx.schemata.getOrAdd(returnType, apiConfig);
-      response.setSchema(new RefProperty(schema.name()));
+      response.setResponseSchema(new RefModel(RefType.DEFINITION.getInternalPrefix() + schema.name()));
     }
     operation.response(200, response);
     writeAuthConfig(swagger, methodConfig, operation);
@@ -431,7 +432,7 @@ public class SwaggerGenerator {
       }
     } else {
       if (f.type() == FieldType.OBJECT) {
-        p = new RefProperty(f.schemaReference().get().name());
+        p = new RefProperty(RefType.DEFINITION.getInternalPrefix() + f.schemaReference().get().name());
       } else if (f.type() == FieldType.ARRAY) {
         p = new ArrayProperty(convertToSwaggerProperty(f.arrayItemSchema()));
       } else if (f.type() == FieldType.ENUM) {

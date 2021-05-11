@@ -241,7 +241,7 @@ public class ServletRequestParamReaderTest {
   public void testReadByteArrayParameter() throws Exception {
     Method method =
         TestEndpoint.class.getDeclaredMethod("doSomething", byte[].class);
-    Object[] params = readParameters("{\"bytes\":\"AQIDBA==\"}", method);
+    Object[] params = readParameters("{\"bytes\":\"AQIDBA\"}", method);
 
     assertEquals(1, params.length);
     assertThat((byte[]) params[0]).isEqualTo(new byte[]{1, 2, 3, 4});

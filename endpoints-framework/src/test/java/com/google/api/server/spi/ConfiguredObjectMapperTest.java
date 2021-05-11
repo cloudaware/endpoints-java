@@ -23,6 +23,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.when;
 
+import com.google.api.client.util.Lists;
 import com.google.api.server.spi.config.Transformer;
 import com.google.api.server.spi.config.model.ApiSerializationConfig;
 import com.google.common.collect.ImmutableList;
@@ -75,6 +76,7 @@ public class ConfiguredObjectMapperTest {
   private static void doModuleSetup(Module module, String name) {
     when(module.getModuleName()).thenReturn(name);
     when(module.version()).thenReturn(Version.unknownVersion());
+    when(module.getDependencies()).thenReturn(Lists.newArrayList());
   }
 
   @Test
